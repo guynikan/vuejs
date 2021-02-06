@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      {{ nome }}
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const options = {
+        el: "#app",
+        data: {
+          nome: "Ed",
+        },
+      };
+      // a inicialização do vue é sempre feita a partir do seu construtor
+      // Então eu preciso passar pra ele as options, que será o objeto contendo
+      // o seletor do meu elemento e os dados que quero renderizar nele.
+      const vm = new Vue(options);
+    </script>
+  </body>
+</html>

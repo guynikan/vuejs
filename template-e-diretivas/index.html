@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app" :style="{background: cor}">
+      <h1>{{ titulo }}</h1>
+      <p>Área do Quadrado: {{ lado * lado }}</p>
+      <p>Curso liberado: {{ comprou ? "Sim" : "Não" }}</p>
+      <!-- para inserir o valor de uma prop do vue para um attr
+      Eu preciso inserir este valor e o attr através do v-bin -->
+      <a v-bind:href="href">{{ href }}</a>
+      <br />
+      <!-- eu posso usar o v-bind a partir de um atalho também, apenas -->
+      <!-- inserindo dois pontos antes da minha expressão (no caso passar -->
+      <!-- uma prop vue pro attr href) -->
+      <a :href="href">com atalho {{ href }}</a>
+      <br />
+      <input v-model="cor" type="color" />
+      {{ cor }}
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          titulo: "Curso de VueJS da Origamid",
+          lado: 5,
+          comprou: true,
+          href: "https://www.origamid.com",
+          cor: "#fff",
+        },
+      });
+    </script>
+  </body>
+</html>
