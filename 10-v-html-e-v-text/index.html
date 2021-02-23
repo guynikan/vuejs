@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- v-html: renderiza conteúdo html dentro de uma tag. Modifica o -->
+    <!-- innerHtml do elemento -->
+    <div id="app">
+      <!-- eu posso passar uma prop q contenha como valor uma string e que -->
+      <!-- nessa string tenha tags e então o v-html se encarrega de -->
+      <!-- interpretar e renderizar isso no html corretamente -->
+      <!-- o v-html realmente age como o innerHtml, então se eu tiver -->
+      <!-- elementos dentro da tag onde eu insiro ele, essas tags serão -->
+      <!-- removidas para que o conteúdo da prop passada seja adicionado -->
+      <div v-html="link"></div>
+      <!-- eu tenho também a diretiva v-text, que faz exatamente a mesma -->
+      <!-- coisa que o template vue ({{fruta}}) -->
+      <div v-text="fruta"></div>
+      <!-- O v-once simplesmente tira a reatividade de uma prop na -->
+      <!-- renderização -->
+      <p v-once="gasto">Não reativo: {{ gasto }}</p>
+      <p>Reativo: {{ gasto }}</p>
+      <button @click="gasto += 5">Gasta mais</button>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          link: "<a href='https://www.origamid.com'>Origamid</a>",
+          fruta: "Banana",
+          gasto: 5,
+        },
+        methods: {},
+      });
+    </script>
+  </body>
+</html>
