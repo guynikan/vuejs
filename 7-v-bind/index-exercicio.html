@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <style>
+      table,
+      thead,
+      tr,
+      td {
+        border: 1px solid #252525;
+      }
+      .green {
+        color: green;
+      }
+      .red {
+        color: red;
+      }
+    </style>
+    <div id="app">
+      <button @click="call">Ver preço</button>
+      <br />
+      <table>
+        <thead>
+          <tr>
+            Nome da empresa
+          </tr>
+          <tr>
+            Market cap
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td :class="aapl.cap > googl.cap ? 'green': 'red'">
+              {{ aapl.name }}
+            </td>
+            <td>{{ aapl.cap }}</td>
+          </tr>
+          <tr>
+            <td :class="googl.cap > aapl.cap ? 'green': 'red'">
+              {{ googl.name }}
+            </td>
+            <td>{{ googl.cap }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          response: "",
+          aapl: {
+            name: "",
+            cap: 0,
+          },
+          googl: {
+            name: "",
+            cap: 0,
+          },
+        },
+        methods: {
+          fetchResponse: async function (company) {
+            let response = await fetch(
+              `https://cloud.iexapis.com/stable/stock/${company}/quote?token=pk_332206336deb49d597eb73904f09a1ee`
+            );
+            let json = await response.json();
+            (this[company]["name"] = json.companyName),
+              (this[company]["cap"] = json.marketCap);
+
+            console.log(json.marketCap, json.companyName);
+          },
+          call: function () {
+            ["aapl", "googl"].forEach((company) => this.fetchResponse(company));
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

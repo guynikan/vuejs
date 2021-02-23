@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- O v-on é uma diretiva que permite observarmos eventos nas tags. -->
+    <div id="app">
+      <button v-on:click="handleClick">Clique aqui</button>
+      <!-- o atalho pra v-on é o arroba -->
+      <button @click="contador++">Clique aqui</button>
+      {{ contador }}
+      <!-- Toggle -->
+      <button @click="ativo = !ativo">Toggle</button>
+      <p v-if="ativo">Mostrar texto</p>
+      <!-- Algumas diretivas possuem modificadores e que são utilizados -->
+      <!-- após o argumento (no caso o argumento é o click) -->
+      <a @click.prevent="scrollSuave" href="#">Prevent</a>
+      <!-- Eu posso também encadear modificadores. E além do prevent eu -->
+      <!-- tenho outros, por exemplo o once, que emite o evento apenas
+      uma vez. -->
+      <a @click.prevent.once="handleClick" href="#">Prevent Once</a>
+      <input @keyip="handleClick" type="text" />
+      <!-- Eu tenho modificadores para o event de keyup também. No caso eu -->
+      <!-- estou falando que o event será disparado apenas ao teclar enter -->
+      <input @keyup.enter="handleClick" type="text" />
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          contador: 0,
+          ativo: true,
+        },
+        methods: {
+          handleClick: function (event) {
+            console.log(event);
+          },
+          scrollSuave: function () {
+            console.log("Scroll Suave");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

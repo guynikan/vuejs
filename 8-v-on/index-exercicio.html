@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <style>
+      table,
+      tr,
+      td {
+        border: 1px solid #252525;
+        padding: 10px;
+      }
+    </style>
+    <div id="app">
+      <ul>
+        <li>
+          <a
+            id="aapl"
+            @click.prevent="call"
+            href="https://cloud.iexapis.com/stable/stock/aapl/quote?token=pk_332206336deb49d597eb73904f09a1ee"
+            >Apple</a
+          >
+        </li>
+        <li>
+          <a
+            id="googl"
+            @click.prevent="call"
+            href="https://cloud.iexapis.com/stable/stock/googl/quote?token=pk_332206336deb49d597eb73904f09a1ee
+"
+            >Google</a
+          >
+        </li>
+        <li>
+          <a
+            id="amzn"
+            @click.prevent="call"
+            href="https://cloud.iexapis.com/stable/stock/amzn/quote?token=pk_332206336deb49d597eb73904f09a1ee"
+            >Amazon</a
+          >
+        </li>
+        <li>
+          <a
+            id="ebay"
+            @click.prevent="call"
+            href="https://cloud.iexapis.com/stable/stock/ebay/quote?token=pk_332206336deb49d597eb73904f09a1ee"
+            >Ebay</a
+          >
+        </li>
+        <li>
+          <a
+            id="pypl"
+            @click.prevent="call"
+            href="https://cloud.iexapis.com/stable/stock/pypl/quote?token=pk_332206336deb49d597eb73904f09a1ee"
+            >PayPal</a
+          >
+        </li>
+      </ul>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Market Cap</th>
+          <th>Latest Price</th>
+        </tr>
+        <tr>
+          <td>{{ aapl.name }}</td>
+          <td>{{ aapl.cap }}</td>
+          <td>{{ aapl.price }}</td>
+        </tr>
+        <tr>
+          <td>{{ googl.name }}</td>
+          <td>{{ googl.cap }}</td>
+          <td>{{ googl.price }}</td>
+        </tr>
+        <tr>
+          <td>{{ amzn.name }}</td>
+          <td>{{ amzn.cap }}</td>
+          <td>{{ amzn.price }}</td>
+        </tr>
+        <tr>
+          <td>{{ ebay.name }}</td>
+          <td>{{ ebay.cap }}</td>
+          <td>{{ ebay.price }}</td>
+        </tr>
+        <tr>
+          <td>{{ pypl.name }}</td>
+          <td>{{ pypl.cap }}</td>
+          <td>{{ pypl.price }}</td>
+        </tr>
+      </table>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          response: "",
+          aapl: {
+            name: "",
+            cap: 0,
+            price: 0,
+          },
+          googl: {
+            name: "",
+            cap: 0,
+            price: 0,
+          },
+          amzn: {
+            name: "",
+            cap: 0,
+            price: 0,
+          },
+          ebay: {
+            name: "",
+            cap: 0,
+            price: 0,
+          },
+          pypl: {
+            name: "",
+            cap: 0,
+            price: 0,
+          },
+        },
+        methods: {
+          fetchResponse: async function (target) {
+            let response = await fetch(target.href);
+            let json = await response.json();
+            (this[target.id]["name"] = json.companyName),
+              (this[target.id]["cap"] = json.marketCap),
+              (this[target.id]["price"] = json.latestPrice);
+
+            console.log(json.marketCap, json.companyName);
+          },
+          call: function ({ target }) {
+            console.log(target.id);
+            this.fetchResponse(target);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

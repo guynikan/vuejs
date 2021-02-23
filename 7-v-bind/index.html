@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <a v-bind:href="link">link google</a>
+      <!-- Se eu precisar adicionar outras classes e que não sejam
+      diretivas, eu preciso abrir um novo atributo e então passar pra
+      ela.
+      Ao renderizar o Vue se encarrega de unir os dois em um único
+      atributto class. 
+      -->
+      <p :class="cor" class="vermelho"></p>
+      <!-- Eu posso também usar expressões dentro dos valores das
+        minhas diretivas -->
+      <p :class="comprou ? 'verde': 'vermelho'"></p>
+    </div>
+    <script type="module">
+      // o v-bind é uma diretiva que permite utilizar expressões e
+      // props dentro de atributos html
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          comprou: true,
+          link: "https://www.google.com",
+          cor: "azul",
+        },
+      });
+    </script>
+  </body>
+</html>

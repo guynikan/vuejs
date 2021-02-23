@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- O v-if é uma diretiva que permite o uso de condicionais. -->
+    <!-- Tem também o v-else -->
+    <div id="app">
+      <!-- o elemento é apenas "escondido" mas continua no DOM -->
+      <p v-show="logado">Usuário não logado</p>
+      <p v-else>Usuário deslogado</p>
+      <!-- no vue existe a tag <template></template> que me permite
+        agrupar elementos -->
+      <template v-if="logado">
+        <button @click="logado =!logado">Mostrar</button>
+      </template>
+      <template v-else>
+        <p>Usuário tá logado</p>
+        <button @click="logado = !logado">Esconder</button>
+      </template>
+      <!-- v-show - enquanto o v-if remove um elemento, o v-show
+        apenas adiciona display: none.
+        v-show é indicado para casos em que se muda o estado
+        constantemente, por ser mais rápido.
+        outra coisa sobre o v-show é que ele não funciona no template.
+      -->
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          logado: true,
+        },
+        methods: {},
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      {{ total }}
+      <button @click="incrementar">Incrementar</button>
+      <button @click="diminuir">Diminuir</button>
+      <!-- eu posso também passar parâmetros pro meu metódo -->
+      <button @click="mudarNome('Violão')">Violão</button>
+      {{ instrumento }}
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          total: 0,
+          instrumento: "",
+        },
+        methods: {
+          // os métodos são declarados diretamente como objetos de
+          // methods, sem a necessidade de passá-los como valores de
+          // props
+          incrementar() {
+            this.total++;
+          },
+
+          diminuir() {
+            this.total--;
+          },
+
+          mudarNome(instrumento) {
+            this.instrumento = instrumento;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
