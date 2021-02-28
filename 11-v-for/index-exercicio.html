@@ -6,7 +6,9 @@
   </head>
   <body>
     <div id="app">
-      <p v-once="lista" v-html="lista"></p>
+      <ul>
+        <li v-for="adress, key in adresses">{{ key }} - {{ adress }}</li>
+      </ul>
     </div>
     <script type="module">
       import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
@@ -14,10 +16,17 @@
       const vm = new Vue({
         el: "#app",
         data: {
-          lista: "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>",
+          adresses: {},
         },
-        methods: {},
+        methods: {
+          async fetchResponse() {
+            let response = await fetch("http://viacep.com.br/ws/04538133/json");
+            let json = await response.json();
+            this.adresses = json;
+          },
+        },
       });
+      vm.fetchResponse();
     </script>
   </body>
 </html>

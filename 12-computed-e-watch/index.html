@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ total }}</h1>
+      <li v-for="{marca, cor} in carrosAzuis">{{ marca }}, {{ cor }}</li>
+      <button @click="removerCarro">Remove o tesla</button>
+      <button @click="contador++">Adicionar</button>
+      {{ contador }}
+      <input type="text" placeholder="cep" maxlength="8" v-model="cep" />
+      <h1>{{ cep }}</h1>
+      <li v-for="adres in address">{{ adres }}</li>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          cep: "",
+          address: {},
+          contador: 0,
+          preco: 59,
+          desconto: 10,
+          carros: [
+            { marca: "VW", cor: "Azul" },
+            {
+              marca: "Ford",
+              cor: "Preto",
+            },
+            {
+              marca: "Tesla",
+              cor: "Azul",
+            },
+          ],
+        },
+        // Quando preciso modificar um dado usando js, posso utilizar uma prop
+        // dentro de um computed -->
+        computed: {
+          total() {
+            return `R$ ${this.preco - this.desconto}`;
+          },
+
+          carrosAzuis() {
+            return this.carros.filter((carro) => carro.cor === "Azul");
+          },
+        },
+        methods: {
+          removerCarro() {
+            this.carros.pop();
+          },
+        },
+        // O watch é ativado sempre que um dado reativo é modificado.
+        watch: {
+          // o nome do método precisa ser igual ao nome da prop que eu
+          // quero monitorar
+          //  contador(valorNovo, valorAntigo) {
+          //   console.log("ativou", valorNovo, valorAntigo);
+          //  },
+          cep(value) {
+            if (value.length === 8) {
+              fetch(`http://viacep.com.br/ws/${this.cep}/json`)
+                .then((r) => r.json())
+                .then((json) => (this.address = json));
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

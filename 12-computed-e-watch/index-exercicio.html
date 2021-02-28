@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ fullName }}</h1>
+      <select
+        @click="fetchResponse"
+        v-model="selecionado"
+        name="countries"
+        id="countries"
+      >
+        <option v-for="country in countries" :value="country.name">
+          {{ country.name }}
+        </option>
+      </select>
+      <p>{{ capital.capital }}</p>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          nome: "Edson",
+          sobrenome: "Batista",
+          selecionado: "",
+          capital: "",
+          countries: [],
+        },
+        methods: {
+          fetchResponse() {
+            fetch("https://restcountries.eu/rest/v2/all")
+              .then((r) => r.json())
+              .then((json) => (this.countries = json));
+          },
+        },
+        watch: {
+          selecionado(valor) {
+            this.capital = this.countries.find(
+              (country) => country.name === valor
+            );
+          },
+        },
+        computed: {
+          fullName() {
+            return `${this.nome} ${this.sobrenome}`;
+          },
+        },
+      });
+      vm.fetchResponse();
+    </script>
+  </body>
+</html>
