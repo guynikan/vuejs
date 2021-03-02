@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- O v-model é utilizado para tornar reativo o conteúdo de forms. É o -->
+    <!-- chamado two-way data binding 
+    O padrão é o one-way, que é alcançado através do v-bind. 
+    O one-way significa que mudanças no JS criam mudanças no DOM.
+    Enquanto que no two-way tanto mudanças no DOM como no JS, mudam.
+    -->
+    <div id="app">
+      <!-- Com o v-model, se eu alterar o valor no input pela tela, este -->
+      <!-- valor é atualizado também no JS -->
+
+      <!-- o v-model tem alguns modificadores, um deles o lazy, que ao ser -->
+      <!-- utilizado faz com que a atualização do valor da prop não seja em -->
+      <!-- tempo real. Ou seja, ele irá fazer a nova atribuição apenas -->
+      <!-- quando o foco do campo for perdido. Além do lazy, tem o
+        number e o trim (o nome já diz o que fazem) -->
+      <input type="text" v-model.lazy="nome" />
+      <!-- Já com o v-bind, o valor só pode ser atualizado pelo JS -->
+      <input :value="email" type="text" />
+      <input v-model="receberEmail" type="checkbox" name="receberEmail" id="" />
+      <label for="receberEmail">Receber email</label>
+      <!-- No caso de radio, você só precisa usar a mesmo prop como valor -->
+      <!-- do v-model para todos os radios e o vue faz a comparação dos -->
+      <!-- values e atribui o valor a prop automaticamente -->
+      <label for="vermelho">Vermelho</label>
+      <input
+        type="radio"
+        v-model="cor"
+        value="vermelho"
+        name=""
+        id="vermelho"
+      />
+      <label for="verde">Verde</label>
+      <input type="radio" v-model="cor" value="verde" name="" id="verde" />
+      <textarea v-model="mensagem" name="" id="" cols="30" rows="10"></textarea>
+      {{ nome }}
+      {{ email }}
+      {{ receberEmail }}
+      {{ cor }}
+      {{ mensagem }}
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          nome: "",
+          email: "",
+          mensagem: "",
+          receberEmail: null,
+          cor: null,
+        },
+      });
+    </script>
+    <style></style>
+  </body>
+</html>

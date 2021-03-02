@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- o valor que eu passo para :class não é uma classe e sim um prop -->
+      <!-- vue. -->
+      <p :class="cor">Cor azul</p>
+      <!-- Além da prop com o valor direto da classe, eu posso -->
+      <!--   passar pra :class um obj, em que a prop com o valor true será -->
+      <!-- adicionada como classe. -->
+      <p :class="{ativo: estaAtivo, cor: possuiCor}">Texto ativo</p>
+      <!-- Neste caso o p recebe como classe a prop 'ativo' -->
+      <button @click="estaAtivo = !estaAtivo">Toggle background</button>
+      <!-- Além de um obj eu posso passar também um array como valor de -->
+      <!-- classe. -->
+      <!-- Dessa forma, todos os elementos deste array são aplicados ao -->
+      <!-- elemento como classes
+      Inclusive, esta é a única forma aceita pela diretiva para se
+      utilizar mais de uma classe no mesmo elemento -->
+      <p :class="arrayzin">Array</p>
+      <!-- Eu posso também aplicar estilo inline usando :style -->
+      <p :style="{background: corDeFundo, fontSize: '20px'}">Estilo inline</p>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          // já a prop vue recebe como valor o nome da classe a ser
+          // aplicada
+          cor: "azul",
+          estaAtivo: true,
+          possuiCor: false,
+          arrayzin: ["cor1", "cor2", "cor3"],
+          corDeFundo: "green",
+        },
+      });
+    </script>
+    <style>
+      .azul {
+        color: blue;
+      }
+      /* Que por sua vez, aplica o estilo definido pro seletor da classe
+        ativo
+       */
+      .ativo {
+        background: red;
+      }
+    </style>
+  </body>
+</html>

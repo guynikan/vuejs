@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <button @click="toggle = !toggle">Alternar</button>
+      <ul @click="changeColor" :class="{column: toggle}">
+        <li :style="{background: color}">Sobre</li>
+        <li>Produtos</li>
+        <li>Serviços</li>
+        <li>Contato</li>
+      </ul>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          toggle: false,
+          color: "",
+        },
+        methods: {
+          changeColor() {
+            const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            this.color = color;
+          },
+        },
+      });
+    </script>
+    <style>
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        font-family: monospace;
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+      }
+      .column {
+        flex-direction: column;
+      }
+      li {
+        padding: 20px;
+        background: #84e;
+        color: white;
+        border-radius: 4px;
+        margin: 10px;
+        flex: 1;
+        text-align: center;
+      }
+    </style>
+  </body>
+</html>
