@@ -6,13 +6,29 @@
   </head>
   <body>
     <div id="app">
-      <button @click="toggle = !toggle">Alternar</button>
-      <ul @click="changeColor" :class="{column: toggle}">
-        <li :style="{background: color}">Sobre</li>
-        <li>Produtos</li>
-        <li>Serviços</li>
-        <li>Contato</li>
-      </ul>
+      <form class="form">
+        <label for="name">Nome</label>
+        <input v-model="nome" id="name" type="text" />
+        <label for="email">E-mail</label>
+        <input v-model="email" type="email" name="email" />
+        <label for="phone">Telefone</label>
+        <input v-model="phone" type="number" name="phone" />
+        <label for="message">Mensagem</label>
+        <textarea
+          v-model="message"
+          name="message"
+          cols="30"
+          rows="10"
+        ></textarea>
+        <button @click.prevent="mostrar = true" type="submit">Enviar</button>
+      </form>
+      <div v-if="mostrar">
+        <p>TESTE</p>
+        <p>{{ nome }}</p>
+        <p>{{ email }}</p>
+        <p>{{ phone }}</p>
+        <p>{{ message }}</p>
+      </div>
     </div>
     <script type="module">
       import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
@@ -20,37 +36,19 @@
       const vm = new Vue({
         el: "#app",
         data: {
-          toggle: false,
-          color: "",
+          mostrar: false,
+          nome: "",
+          email: null,
+          phone: null,
+          message: null,
         },
-        methods: {
-          changeColor() {
-            const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            this.color = color;
-          },
-        },
+        methods: {},
       });
     </script>
     <style>
-      ul {
+      .form {
         display: flex;
-        flex-wrap: wrap;
-        font-family: monospace;
-        list-style: none;
-        padding: 0px;
-        margin: 0px;
-      }
-      .column {
         flex-direction: column;
-      }
-      li {
-        padding: 20px;
-        background: #84e;
-        color: white;
-        border-radius: 4px;
-        margin: 10px;
-        flex: 1;
-        text-align: center;
       }
     </style>
   </body>

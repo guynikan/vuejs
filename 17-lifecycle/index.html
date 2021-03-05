@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      {{ mensagem }}
+      <img :src="github.avatar_url" alt="" />
+      <button @click="contador++">Total: {{ contador }}</button>
+      <button @click="destruir">Destruir!</button>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          mensagem: "Essa é uma mensagem",
+          github: {},
+          contador: 0,
+        },
+        methods: {
+          puxarGithub() {
+            fetch("https://api.github.com/users/jreeeedd")
+              .then((r) => r.json())
+              .then((json) => (this.github = json));
+          },
+
+          destruir() {
+            // o $ indica que se trata de um obj do vue
+            // no caso é um método que destrói o ciclo de vida do meu
+            // componente, fazendo com que todos os métodos do lifecycle
+            // parem de funcionar, junto com a reatividade também
+            this.$destroy();
+          },
+        },
+        beforeCreate() {
+          console.log("---------------");
+          console.log("Antes da criação");
+          console.log(this.mensagem); // undefined pois o beforeCreate
+          // acontecem antes da atribuição das datas, criação dos
+          // methods etc
+          console.log("---------------");
+        },
+        created() {
+          console.log("-----------");
+          console.log("Foi criado");
+          console.log(this.mensagem); // retorna o o valor de mensagem
+          // pois o created acontece após a atribuição das datas
+          console.log(this.$el); // $el se refere ao DOM e no caso do
+          // created o retorno é undefined pois o DOM ainda não foi
+          // criado
+          console.log("-----------");
+          this.puxarGithub();
+        },
+        beforeMount() {
+          console.log("----------------");
+          console.log("Antes de montar");
+          console.log(this.$el); // já no beforeMount o DOM já foi
+          // criado, porém ainda não foi populado com os valores
+          // reativos
+          console.log("----------------");
+        },
+        mounted() {
+          console.log("------");
+          console.log("Montou");
+          console.log(this.$el); // já no mounted o DOM é criado e os
+          // valores de data dentro dele são populados
+          console.log("------");
+        },
+        // o beforeUpdate age parecido com o watch, com a diferença
+        // que ele observará qualquer mudança feita. Independente do
+        // elemento.
+        beforeUpdate() {
+          console.log("antes de atualizar o DOM");
+        },
+
+        updated() {
+          console.log("depois de atualizar o DOM");
+          document.title = this.contador;
+        },
+        beforeDestroy() {
+          console.log("Antes de destruir");
+        },
+        destroyed() {
+          console.log("Destruiu");
+        },
+      });
+    </script>
+    <style></style>
+  </body>
+</html>

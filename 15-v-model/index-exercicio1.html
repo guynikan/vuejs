@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <form class="form">
+        <label for="width">width</label>
+        <input v-model.lazy="width" id="width" type="number" />
+        <label for="height">height</label>
+        <input v-model.lazy="height" type="number" id="height" />
+        <label for="fontSize">font-size</label>
+        <input v-model.lazy="fontSize" type="number" id="fontSize" />
+        <label for="fontFamily">fontFamily</label>
+        <input v-model.lazy="fontFamily" type="text" />
+        <label for="textAlign">text-align</label>
+        <input v-model.lazy="textAlign" type="text" />
+        <label for="background">background</label>
+        <input v-model.lazy="background" type="text" />
+        <label for="color">color</label>
+        <input v-model="color" type="text" />
+        <label for="borderRadius">border-radius</label>
+        <input v-model="borderRadius" type="text" />
+        <button :style="gerarBotao()">Seu butão</button>
+      </form>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          width: null,
+          height: null,
+          fontSize: null,
+          fontFamily: null,
+          textAlign: null,
+          background: null,
+          color: null,
+          borderRadius: null,
+        },
+        methods: {
+          gerarBotao() {
+            return {
+              width: this.width + "px",
+              height: this.height + "px",
+              fontSize: this.fontSize + "px",
+              fontFamily: this.fontFamily,
+              textAlign: this.textAlign,
+              background: this.background,
+              color: this.color,
+              borderRadius: this.borderRadius + "px",
+              border: "none",
+            };
+          },
+        },
+      });
+    </script>
+    <style>
+      .form {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </body>
+</html>
