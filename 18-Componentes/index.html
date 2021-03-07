@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <!--
+         -Como o arquivo é um .html é preciso usar dessa forma pois o html
+         -é case sensitive.
+         -Aqui no caso não tem problema pois o vue consegue transformar
+         -kebab em pascal
+         -->
+      <botao-contador></botao-contador>
+      <componente-local></componente-local>
+      <botao-contador-externo></botao-contador-externo>
+    </div>
+    <script type="module">
+      import BotaoContadorExterno from "./BotaoContadorExterno.js";
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      console.log(BotaoContadorExterno);
+
+      // Meu componente importado e registrado como um component
+      // global
+      // Vue.component("BotaoContadorExterno", BotaoContadorExterno);
+
+      // Essa é a forma de declaração para um componente global
+      Vue.component("BotaoContador", {
+        data() {
+          return {
+            mensagem: "Isso",
+            total: 0,
+          };
+        },
+
+        template: `<button @click="total++">Contar: {{total}}</button>`,
+
+        methods: {
+          mostrarConsole() {
+            console.log("Ativou");
+          },
+        },
+      });
+
+      const ComponenteLocal = {
+        name: "ComponenteLocal",
+        // Dentro do meu template eu posso ter apenas um elemento. Dentro
+        // desse elemento eu posso ter quantos eu quiser, inclusive
+        // outros componentes. Porém pra outros componentes, caso não
+        // forem globais, antes eu preciso registrá-los.
+        template: `<div>Componente Local
+        <BotaoContador></BotaoContador>
+        </div>`,
+        data() {
+          return {
+            contar: 20,
+          };
+        },
+
+        computed: {
+          contarDobro() {
+            //...
+          },
+        },
+      };
+
+      const vm = new Vue({
+        el: "#app",
+        components: {
+          BotaoContadorExterno,
+          ComponenteLocal,
+        },
+      });
+    </script>
+    <style></style>
+  </body>
+</html>
