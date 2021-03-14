@@ -11,9 +11,15 @@ export default {
         <h1>
         {{results.title}}
         </h1>
-        <ul>
-        <li v-for="result in results.consolidated_weather">
-        <p>Dia: {{result.applicable_date}}</p>
+        <ul style="display: flex">
+        <li style="
+          listStyleType: none;
+          background: whitesmoke;
+          margin: 10px;
+          borderRadius: 5px;
+
+        " v-for="result in results.consolidated_weather">
+        <p>{{result.applicable_date}}</p>
         <img style="maxWidth: 100px" v-bind:src="'img/' + result.weather_state_abbr + '.svg'" />
         </li>
         </ul>

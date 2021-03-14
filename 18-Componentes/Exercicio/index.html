@@ -7,15 +7,18 @@
   <body>
     <div id="app">
       <previsao-tempo></previsao-tempo>
+      <mercado-hoje></mercado-hoje>
     </div>
     <script type="module">
       import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
-      import PrevisaoTempo from "./PrevisaoTempo.js";
+      import PrevisaoTempo from "./Componentes/PrevisaoTempo.js";
+      import MercadoHoje from "./Componentes/MercadoHoje.js";
 
       const vm = new Vue({
         el: "#app",
         components: {
           PrevisaoTempo,
+          MercadoHoje,
         },
       });
     </script>

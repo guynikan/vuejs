@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!--
+       -É possível criar eventos customizados e ativá-los quando quiser.
+       -Um uso desses eventos pode ser transportar informações entre
+       -componentes
+       -->
+    <div id="app">
+      <!--O meu método mostrarMensagem só vai acontecer se o meu origamid-->
+      <!--for emitido-->
+      <!--{{ totalClientes }}-->
+
+      <!--
+           -através das diretivas eu informo então o meu emissor e o que
+           -deve ser feito ao ativá-lo. Aqui no caso eu estou atribuindo
+           -ao meu contador, a mensagem que foi transmitida (que é o valor
+           -do contador dentro do meu componente filho)
+           Por essa ser uma ação comum, o vue tem um modificador para
+           o nome do meu emissor. Ex: :contador.sync="contador"
+           Isso fará com que o valor do meu contador (prop do pai)
+           seja atualizada com o valor da minha prop contadorFilho
+           (prop do filho)
+           -->
+      {{ contador }}
+      <meu-botao
+        :contador="contador"
+        @origamid="mostrarMensagem"
+        @update:contador="contador = $event"
+        :contador.sync="contador"
+      ></meu-botao>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const MeuBotao = {
+        name: "MeuBotao",
+        template: `
+        <div>
+        <button @click="handleClick">Clique</button>
+        <button @click="incrementar">Total: {{contadorFilho}}</button>
+        </div>
+        `,
+        props: ["contador"],
+        data() {
+          return {
+            totalClientes: 200,
+            contadorFilho: this.contador,
+          };
+        },
+        methods: {
+          incrementar() {
+            // Há um padrão de nomenclatura para nomes de emissores em
+            // que o nome deve informar a ação e a prop que ele altera,
+            // caso haja.
+            this.contadorFilho++;
+            this.$emit("update:contador", this.contadorFilho);
+          },
+          handleClick() {
+            console.log("handleClick aconteceu");
+            // O meu emit recebe sempre um nome e opcionalmente uma
+            // mensagem a ser emitida
+            this.$emit("origamid", this.totalClientes);
+          },
+        },
+      };
+
+      const vm = new Vue({
+        el: "#app",
+        components: {
+          MeuBotao,
+        },
+        methods: {
+          mostrarMensagem(m) {
+            // o meu método que é ligado ao meu emissor recebe um
+            // param. Este param é a mensagem que foi emitida
+            console.log(m);
+            console.log("Origamid ocorreu");
+          },
+        },
+        data: {
+          contador: 0,
+        },
+      });
+    </script>
+    <style></style>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!--As props servem para passar dados de um componente para outro-->
+    <div id="app">
+      <!--
+         -Eu posso passar sem os dois pontos no início também. Porém sem
+         -os dois pontos o que será passado pro meu componente filho será
+         -apenas uma string ao invés da prop
+         -->
+      <lista-produtos titulo="Feira" :lista="lista"></lista-produtos>
+      <botao-contador :valor="valor"></botao-contador>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+      import ListaProdutos from "./Componentes/ListaProdutos.js";
+      import BotaoContador from "./Componentes/BotaoContador.js";
+
+      const vm = new Vue({
+        el: "#app",
+        components: {
+          ListaProdutos,
+          BotaoContador,
+        },
+        data: {
+          lista: ["Uva", "Pêra", "Salada Mista"],
+          valor: 0,
+        },
+        methods: {},
+      });
+    </script>
+    <style></style>
+  </body>
+</html>

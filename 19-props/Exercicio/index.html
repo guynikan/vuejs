@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="app">
+      <form>
+        <label for="company">Company Name</label>
+        <input v-model="companyName" id="company" type="text" />
+        <button @click.prevent="getDados">Get</button>
+        {{ companyName }}
+      </form>
+      <show-dados :dados="dados"></show-dados>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+      import ShowDados from "./Componentes/ShowDados.js";
+
+      const vm = new Vue({
+        el: "#app",
+        components: {
+          ShowDados,
+        },
+        data: {
+          companyName: "",
+          dados: [],
+        },
+        methods: {
+          async fetchDados(company) {
+            const response = await fetch(
+              `https://cloud.iexapis.com/stable/stock/${company}/quote?token=pk_332206336deb49d597eb73904f09a1ee`
+            );
+
+            const json = await response.json();
+            console.log(json);
+            this.dados = json;
+          },
+
+          getDados() {
+            this.fetchDados(this.companyName);
+            console.log("pegou");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
