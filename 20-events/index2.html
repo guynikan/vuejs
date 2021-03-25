@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!--Eu não consigo transmitir uma mensagem diretamente através de-->
+    <!--componentes filhos. Pra isso eu tenho o EventBus. -->
+    <div id="app">
+      <componente-um></componente-um>
+      <componente-dois></componente-dois>
+    </div>
+    <script type="module">
+      import Vue from "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js";
+
+      const EventBus = new Vue();
+
+      const ComponenteUm = {
+        name: "ComponenteUm",
+        data() {
+          return {
+            mensagem: "Eu sou o componente um",
+          };
+        },
+        template: `<p @click="emitirEvento">Componente 1</p>`,
+        methods: {
+          emitirEvento() {
+            // Ao emitir o meu evento junto a instância do EventBus, eu
+            // tenho o poder de usar a minha resposta em qualquer outro
+            // lugar.
+            EventBus.$emit("meuevento", this.mensagem);
+          },
+        },
+      };
+
+      const ComponenteDois = {
+        name: "ComponenteDois",
+        data() {
+          return {
+            mensagem: "",
+          };
+        },
+        template: `<p>Componente 2:  {{mensagem}}</p>`,
+
+        created() {
+          // Para que eu possa utilizar então a resposta mandada pelo
+          // emissor, eu preciso chamar o método on do EventBus.
+          EventBus.$on("meuevento", (event) => {
+            console.log("Evento Ocorreu", event);
+            this.mensagem = event;
+          });
+        },
+      };
+
+      const vm = new Vue({
+        el: "#app",
+        components: {
+          ComponenteUm,
+          ComponenteDois,
+        },
+        methods: {},
+        data: {},
+      });
+    </script>
+    <style></style>
+  </body>
+</html>
